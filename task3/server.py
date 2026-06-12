@@ -3,7 +3,7 @@ import socket, threading
 
 
 class TCPServer(BaseTCPSocket):
-    def __init__(self, host: str, port: int):
+    def __init__(self, host='127.0.0.1', port=9999):
         super().__init__(host, port)
         self.clients: list[socket.socket] = []
         self.threads: list[threading.Thread] = []
@@ -62,3 +62,12 @@ class TCPServer(BaseTCPSocket):
             except:
                 client.close()
                 self.clients.remove(client)
+
+
+if __name__ == "__main__":
+    server = TCPServer()
+    try:
+        server.start()  # Блокирующий вызов, работает пока не остановят
+    except KeyboardInterrupt:
+        print("\nОстановка сервера...")
+        server.stop()
