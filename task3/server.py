@@ -10,6 +10,7 @@ class TCPServer(BaseTCPSocket):
 
     def start(self):
         self._create_socket()
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind((self.host, self.port))
         self.socket.listen(5)
         self.is_running = True
